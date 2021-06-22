@@ -1,4 +1,4 @@
-module golang.publicaccess.org/fronting
+module github.com/KonaArctic/fronting
 
 go 1.15
 
