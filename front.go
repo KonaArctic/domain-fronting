@@ -5,20 +5,17 @@ import tls "github.com/refraction-networking/utls"
 import "io"
 import "net"
 
-var roller * tls.Roller
-
 func front( outer string , inner string )( io.ReadWriteCloser , error ) {
 	var err error
 	var socket net.Conn
+	var config tls.Config
 
-	if roller == nil {
-		roller , err = tls.NewRoller( ) }
+	socket , err = net.Dial( "tcp" , outer + ":443" )
 	if err != nil {
 		return socket , err }
 
-	socket , err = roller.Dial( "tcp" , outer + ":443" , outer )
-	if err != nil {
-		return socket , err }
+	config.ServerName = outer
+	socket = tls.UClient( socket , & config , tls.HelloRandomizedNoALPN )
 
 	return httpNewHost( socket , inner ) , nil
 }
