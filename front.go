@@ -5,15 +5,16 @@ import tls "github.com/refraction-networking/utls"
 import "io"
 import "net"
 
-var roller tls.Roller = tls.Roller{
-	HelloIDs: [ ]tls.ClientHelloID{
-		tls.HelloRandomized,
-	},
-}
+var roller * tls.Roller
 
 func front( outer string , inner string )( io.ReadWriteCloser , error ) {
 	var err error
 	var socket net.Conn
+
+	if roller == nil {
+		roller , err = tls.NewRoller( ) }
+	if err != nil {
+		return socket , err }
 
 	socket , err = roller.Dial( "tcp" , outer + ":443" , outer )
 	if err != nil {
