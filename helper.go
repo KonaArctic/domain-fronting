@@ -4,6 +4,7 @@ import "io"
 import "net"
 import "net/http"
 import "time"
+import "os"
 
 type any interface{ }
 
@@ -50,6 +51,7 @@ func httpNewHost( socket io.ReadWriteCloser , inner string ) io.ReadWriteCloser 
 	go func( ) {
 		request = * mu( http.ReadRequest( bufio.NewReader( pipenet ) ) )[ 0 ].( * http.Request )
 		request.Host = inner
+		request.Write( os.Stderr )
 		request.Write( socket )
 		go io.Copy( socket , pipenet )
 		go io.Copy( pipenet , socket )
