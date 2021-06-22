@@ -1,4 +1,4 @@
-module github.com/KonaArctic/fronting
+module github.com/KonaArctic/domain-fronting
 
 go 1.15
 
