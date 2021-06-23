@@ -5,7 +5,7 @@ import tls "github.com/refraction-networking/utls"
 import "io"
 import "net"
 
-func front( outer string , inner string )( io.ReadWriteCloser , error ) {
+func Front( outer string , inner string )( io.ReadWriteCloser , error ) {
 	var err error
 	var socket net.Conn
 	var config tls.Config
